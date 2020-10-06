@@ -5,9 +5,9 @@ const server = http.createServer(app);
 const socket = require("socket.io");
 const io = socket(server);
 
-app.get("/", (req, res) => {
-    console.log("we're on the main page baby")
-})
+// app.get("/", (req, res) => {
+//     console.log("we're on the main page baby")
+// })
 
 
 // Create an object to store all the calls
