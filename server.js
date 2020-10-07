@@ -1,14 +1,27 @@
 const express = require("express");
 const http = require("http");
+const path = require('path');
 const app = express();
 const server = http.createServer(app);
 const socket = require("socket.io");
 const io = socket(server);
+const { v4: uuidv4 } = require('uuid');
 
-// app.get("/", (req, res) => {
-//     console.log("we're on the main page baby")
-// })
+// ROUTES
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname+'/index.html'))
+})
 
+app.get("/createCall", (req, res) => {
+    // create uuid
+    const id = uuidv4();
+    // redirect to call/:id
+    res.redirect(`/call/${id}`);
+})
+
+app.get("/call/:id", (req, res) => {
+    res.sendFile(path.join(__dirname+'/call.html'))
+})
 
 // Create an object to store all the calls
 const calls = {};
