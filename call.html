@@ -6,7 +6,18 @@
 </head>
 <body>
 
-    <p>You're in a call</p>
+    <div id="callContainer">
+        <audio autoplay id="callStream">Your browser is incompatible with the audio tag</audio>
+        <audio autoplay id="partnerCallStream">Your browser is incompatible with the audio tag</audio>
+    </div>
 
+    <script>
+        const audioStream = document.getElementById('callStream');
+        let localStream;
+        navigator.mediaDevices.getUserMedia({audio: true}).then(stream => {
+            localStream = stream;
+            audioStream.srcObject = stream;
+        }).catch()
+    </script>
 </body>
 </html>
