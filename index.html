@@ -1,11 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Audio App</title>
-    </head>
-    <body>
-        <a id="createCall" href="/createCall">Call Someone</a>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    </body>
+    <title>Teleprompter!</title>
+
+    <meta property="og:title" content="Teleprompter!">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@lady_ada_king">
+    <meta name="twitter:creator" content="@lady_ada_king">
+    <meta property="og:url" content="https://teleprompter.glitch.me">
+    <meta property="og:description" content="Cast your computer to your phone or tablet to use it in a teleprompter">
+    <meta name="description" content="Cast your computer to your phone or tablet to use it in a teleprompter"/>
+    <!--     <meta property="og:image" content="https://cdn.glitch.com/1695682e-08d3-41c8-a322-1e235b5782e1%2Fimage.png?v=1561449954420"> -->
+
+    <!-- import the webpage's stylesheet -->
+<!--    <link rel="stylesheet" href="/style.css">-->
+
+    <!-- import the webpage's javascript file -->
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+<h1>Phone a friend</h1>
+<p id="caststatus" class="big">
+    connecting...
+</p>
+
+<div class="button-area">
+    <button class="big caster-btn">
+        Input your joining stream's code
+    </button>
+
+    <button class="big connect-btn">
+        Connect
+    </button>
+
+    <button class="big call-btn">
+        Call
+    </button>
+</div>
+<section class="audiocontainer">
+    <audio id="audioIn" ></audio>
+    <audio id="audioOut" ></audio>
+</section>
+
+</body>
 </html>
