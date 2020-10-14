@@ -25,5 +25,5 @@ app.get("/", (request, response) => {
     response.sendFile(__dirname + "/index.html");
 });
 
-server.listen(8000);
-console.log('Listening on: ' + 8000);
+server.listen(process.env.PORT);
+console.log('Listening on: ' + process.env.PORT);
