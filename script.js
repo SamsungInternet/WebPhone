@@ -16,6 +16,11 @@ const peer = new Peer(''+Math.floor(Math.random()*2**18).toString(36).padStart(4
     path: '/myapp'
 });
 
+peer.on('open', function () {
+    console.log('ready to receive cast')
+    window.caststatus.textContent = `Connected, this device is: ${peer.id}`;
+});
+
 window.peer = peer;
 
 const callBtn = document.querySelector('.call-btn');
@@ -102,10 +107,10 @@ callBtn.addEventListener('click', function(){
     });
 })
 
-peer.on('open', function () {
-    console.log('ready to receive cast')
-    window.caststatus.textContent = `Connected, this device is: ${peer.id}`;
-});
+// peer.on('open', function () {
+//     console.log('ready to receive cast')
+//     window.caststatus.textContent = `Connected, this device is: ${peer.id}`;
+// });
 
 peer.on('connection', function(connection){
     conn = connection;
