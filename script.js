@@ -1,4 +1,4 @@
-/* global Peer, QRCode */
+/* global Peer */
 
 console.log('getting code');
 
@@ -10,25 +10,22 @@ console.log('getting code');
  * Instantiate a new Peer, passing to it an alphanumeric string as an ID and options obj
  * @type {Peer}
  */
-
 const peer = new Peer(''+Math.floor(Math.random()*2**18).toString(36).padStart(4,0), {
     host: location.hostname,
     debug: 1,
     path: '/myapp'
 });
 
-peer.on('open', function () {
-    console.log('ready to receive cast')
-    window.caststatus.textContent = `Connected, this device is: ${peer.id}`;
-});
 window.peer = peer;
 
-const casterBtn = document.querySelector('.caster-btn');
-const connectBtn = document.querySelector('.connect-btn');
 const callBtn = document.querySelector('.call-btn');
 let peer_id;
 let conn;
 let code;
+
+/**
+ * FUNCTIONS
+ */
 
 /**
  * Gets connection code/peer id from caller
@@ -44,6 +41,7 @@ function getStreamCode() {
  * @param callbacks - an object to set the success/error behaviour
  * @returns {void}
  */
+
 function getLocalStream() {
     const constraints = {video: false, audio: true}
 
@@ -61,7 +59,8 @@ function getLocalStream() {
  * @param stream
  * @returns {void}
  */
-function receiveLStream(stream) {
+
+function setLocalStream(stream) {
     window.audioOut.srcObject = stream;
     window.audioOut.autoplay = true;
     window.peerStream = stream;
@@ -72,7 +71,7 @@ function receiveLStream(stream) {
  * @param stream
  * @returns {void}
  */
-function receiveRStream(stream) {
+function setRemoteStream(stream) {
     window.audioOut.srcObject = stream;
     window.audioOut.autoplay = true;
     window.peerStream = stream;
@@ -80,30 +79,33 @@ function receiveRStream(stream) {
 
 getLocalStream();
 
-casterBtn.addEventListener('click', async function () {
-    getStreamCode();
-});
-
 /**
  * Connect the peers
  * @returns {void}
  */
-connectBtn.addEventListener('click', function(){
-    if(code) {
-        conn = peer.connect(code)
-    } else {
-        getStreamCode();
-    }
-})
 
+function connectPeers() {
+    conn = peer.connect(code)
+}
+
+/**
+ * EVENTS
+ */
 callBtn.addEventListener('click', function(){
+    getStreamCode();
+    connectPeers()
     const call = peer.call(code, window.localStream);
     call.on('stream', function(stream) {
         console.log(peer);
         window.peerStream = stream;
-        receiveRStream(stream);
+        setRemoteStream(stream);
     });
 })
+
+peer.on('open', function () {
+    console.log('ready to receive cast')
+    window.caststatus.textContent = `Connected, this device is: ${peer.id}`;
+});
 
 peer.on('connection', function(connection){
     conn = connection;
@@ -118,7 +120,7 @@ peer.on('call', function(call) {
         call.answer(window.localStream)
         call.on('stream', function(stream) {
             console.log('Stream Received');
-            receiveRStream(stream);
+            setRemoteStream(stream);
             window.peerStream = stream;
         });
         call.on('close', function (){
@@ -129,5 +131,15 @@ peer.on('call', function(call) {
     }
 });
 
+peer.on('error', err => console.error(err));
 
-// peer.on('error', err => console.error(err));
+getLocalStream({
+    success: function(stream) {
+        console.log(stream)
+        window.localStream = stream;
+        setLocalStream(stream);
+    },
+    error: function(err) {
+        console.log("u got an error:" + err)
+    }
+});

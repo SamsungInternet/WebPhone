@@ -19,6 +19,8 @@
     <!-- import the webpage's stylesheet -->
 <!--    <link rel="stylesheet" href="/style.css">-->
 
+    <link rel="manifest" href="/manifest.json">
+
     <!-- import the webpage's javascript file -->
     <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"></script>
@@ -31,21 +33,13 @@
 </p>
 
 <div class="button-area">
-    <button class="big caster-btn">
-        Input your joining stream's code
-    </button>
-
-    <button class="big connect-btn">
-        Connect
-    </button>
-
     <button class="big call-btn">
         Call
     </button>
 </div>
 <section class="audiocontainer">
-    <audio id="audioIn" ></audio>
-    <audio id="audioOut" ></audio>
+    <audio controls id="audioIn" ></audio>
+    <audio controls id="audioOut" ></audio>
 </section>
 
 </body>
