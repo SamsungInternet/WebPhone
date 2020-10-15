@@ -9,6 +9,7 @@ const path = require('path');
 const app = express();
 const server = http.createServer(app);
 const { ExpressPeerServer } = require('peer');
+const port = process.env.PORT || "8000";
 
 const peerServer = ExpressPeerServer(server, {
     proxied: true,
@@ -25,5 +26,5 @@ app.get("/", (request, response) => {
     response.sendFile(__dirname + "/index.html");
 });
 
-server.listen(process.env.PORT);
-console.log('Listening on: ' + process.env.PORT);
+server.listen(port);
+console.log('Listening on: ' + port);
