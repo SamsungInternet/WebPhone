@@ -98,7 +98,7 @@ function connectPeers() {
  */
 callBtn.addEventListener('click', function(){
     getStreamCode();
-    connectPeers()
+    connectPeers();
     const call = peer.call(code, window.localStream);
     call.on('stream', function(stream) {
         console.log(peer);
@@ -106,11 +106,6 @@ callBtn.addEventListener('click', function(){
         setRemoteStream(stream);
     });
 })
-
-// peer.on('open', function () {
-//     console.log('ready to receive cast')
-//     window.caststatus.textContent = `Connected, this device is: ${peer.id}`;
-// });
 
 peer.on('connection', function(connection){
     conn = connection;
