@@ -44,13 +44,16 @@ function getStreamCode() {
  * @param callbacks - an object to set the success/error behaviour
  * @returns {void}
  */
-function getLocalStream(callbacks) {
+function getLocalStream() {
     const constraints = {video: false, audio: true}
-    // gotcha: navigator.mediaDevices.getUserMedia is different from this
-    /**
-     * @deprecated `navigator.getUserMedia` should be `navigator.mediaDevices.getUserMedia`
-     */
-    navigator.getUserMedia(constraints, callbacks.success, callbacks.error);
+
+    navigator.mediaDevices.getUserMedia(constraints).then( stream => {
+        console.log(stream);
+        window.localStream = stream;
+        receiveLStream(stream);
+    }).catch( err => {
+        console.log("u got an error:" + err)
+    });
 }
 
 /**
@@ -75,17 +78,7 @@ function receiveRStream(stream) {
     window.peerStream = stream;
 }
 
-getLocalStream({
-    success: function(stream) {
-        console.log(stream)
-        window.localStream = stream;
-        receiveLStream(stream);
-    },
-    error: function(err) {
-        console.log("u got an error:" + err)
-    }
-});
-
+getLocalStream();
 
 casterBtn.addEventListener('click', async function () {
     getStreamCode();
