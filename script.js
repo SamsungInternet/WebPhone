@@ -53,7 +53,7 @@ function getLocalStream() {
     navigator.mediaDevices.getUserMedia(constraints).then( stream => {
         console.log(stream);
         window.localStream = stream;
-        receiveLStream(stream);
+        setLocalStream(stream);
     }).catch( err => {
         console.log("u got an error:" + err)
     });
@@ -137,14 +137,3 @@ peer.on('call', function(call) {
 });
 
 peer.on('error', err => console.error(err));
-
-getLocalStream({
-    success: function(stream) {
-        console.log(stream)
-        window.localStream = stream;
-        setLocalStream(stream);
-    },
-    error: function(err) {
-        console.log("u got an error:" + err)
-    }
-});
