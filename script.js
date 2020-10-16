@@ -18,12 +18,14 @@ const peer = new Peer(''+Math.floor(Math.random()*2**18).toString(36).padStart(4
 
 peer.on('open', function () {
     console.log('ready to receive cast')
-    window.caststatus.textContent = `Connected, this device is: ${peer.id}`;
+    window.caststatus.textContent = `Your device ID is: ${peer.id}`;
 });
 
 window.peer = peer;
 
 const callBtn = document.querySelector('.call-btn');
+const audioContainer = document.querySelector('.call-container');
+const hangUpBtn = document.querySelector('.hangup-btn');
 let peer_id;
 let conn;
 let code;
@@ -66,8 +68,8 @@ function getLocalStream() {
  */
 
 function setLocalStream(stream) {
-    window.audioOut.srcObject = stream;
-    window.audioOut.autoplay = true;
+    window.localAudio.srcObject = stream;
+    window.localAudio.autoplay = true;
     window.peerStream = stream;
 }
 
@@ -77,9 +79,21 @@ function setLocalStream(stream) {
  * @returns {void}
  */
 function setRemoteStream(stream) {
-    window.audioOut.srcObject = stream;
-    window.audioOut.autoplay = true;
+    window.remoteAudio.srcObject = stream;
+    window.remoteAudio.autoplay = true;
     window.peerStream = stream;
+}
+
+function showConnectedContent() {
+    window.caststatus.textContent = `You're connected`;
+    callBtn.hidden = true;
+    audioContainer.hidden = false;
+}
+
+function showCallContent() {
+    window.caststatus.textContent = `Your device ID is: ${peer.id}`;
+    callBtn.hidden = false;
+    audioContainer.hidden = true;
 }
 
 getLocalStream();
@@ -101,10 +115,16 @@ callBtn.addEventListener('click', function(){
     connectPeers();
     const call = peer.call(code, window.localStream);
     call.on('stream', function(stream) {
+        showConnectedContent();
         console.log(peer);
         window.peerStream = stream;
         setRemoteStream(stream);
     });
+})
+
+hangUpBtn.addEventListener('click', function (){
+    conn.close();
+    showCallContent();
 })
 
 peer.on('connection', function(connection){
@@ -118,12 +138,13 @@ peer.on('call', function(call) {
 
     if(answerCall){
         call.answer(window.localStream)
+        showConnectedContent();
         call.on('stream', function(stream) {
             console.log('Stream Received');
             setRemoteStream(stream);
             window.peerStream = stream;
         });
-        call.on('close', function (){
+        call.on('disconnected', function (){
             alert("call ended");
         })
     } else {
