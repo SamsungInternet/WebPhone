@@ -17,7 +17,7 @@
     <!--     <meta property="og:image" content="https://cdn.glitch.com/1695682e-08d3-41c8-a322-1e235b5782e1%2Fimage.png?v=1561449954420"> -->
 
     <!-- import the webpage's stylesheet -->
-<!--    <link rel="stylesheet" href="/style.css">-->
+    <link rel="stylesheet" href="/index.css">
 
     <link rel="manifest" href="/manifest.json">
 
@@ -27,20 +27,41 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-<h1>Phone a friend</h1>
-<p id="caststatus" class="big">
-    connecting...
-</p>
+    <div class="container">
+        <h1>Phone a friend</h1>
+        <p id="caststatus" class="big">
+            connecting...
+        </p>
+<!--        <div class="button-area">-->
+            <button class="call-btn">
+                Call
+            </button>
+<!--        </div>-->
+        <section class="call-container" hidden>
+            <div class="audio-container">
+                <p>You're automatically muted, unmute yourself!</p>
+                <audio controls id="remoteAudio" muted="true"></audio>
+                <audio controls id="localAudio" muted="true"></audio>
+            </div>
+            <button class="hangup-btn">
+                Hang up
+            </button>
+        </section>
+    </div>
 
-<div class="button-area">
-    <button class="big call-btn">
-        Call
-    </button>
-</div>
-<section class="audiocontainer">
-    <audio controls id="audioIn" ></audio>
-    <audio controls id="audioOut" ></audio>
-</section>
+    <section class="modal" hidden>
+        <div id="close">
+            close
+        </div>
+        <div class="inner-modal">
+            <label>Give us your friend's device ID</label>
+            <input placeholder="Enter your friend's device ID" aria-colcount="10">
+            <button class="connect-btn" >
+                Connect
+            </button>
+        </div>
+
+    </section>
 
 </body>
 </html>

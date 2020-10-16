@@ -1,0 +1,76 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+body {
+    color: darkslategrey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: antiquewhite;
+}
+
+h1 {
+    font-size: 6rem;
+    letter-spacing: 0.2rem;
+    margin-bottom: auto;
+}
+
+p {
+    text-align: center;
+    font-size: 2rem;
+}
+
+button {
+    background-color: -internal-light-dark(white, black);
+    padding: 1rem 10rem;
+    border-radius: 3rem;
+    border: none;
+    cursor: pointer;
+}
+
+.call-btn {
+    background-color: darkslategrey;
+    color: antiquewhite;
+    font-size: 3rem;
+    margin-left: 7rem;
+}
+
+.hangup-btn {
+    background-color: darkred;
+    color: white;
+    font-size: 1.5rem;
+    margin-left: 6rem;
+    margin-top: 4rem;
+}
+
+.modal {
+    padding: 5rem;
+    background-color: whitesmoke;
+    border-radius: 2rem;
+    width: 40rem;
+    height: 20rem;
+}
+
+.inner-modal {
+    text-align: center;
+}
+
+.modal label {
+    font-size: 1.5rem;
+}
+.modal input {
+    margin: 1rem 7rem 3rem;
+    display: block;
+    padding: 1rem;
+    border-radius: 3rem;
+    box-shadow:0 0 15px 4px rgba(0,0,0,0.19);
+    border: none;
+    width:50%;
+}
+
+.connect-btn {
+    background-color: #0c1d1d;
+    color: whitesmoke;
+    font-size: 1.5rem;
+}
