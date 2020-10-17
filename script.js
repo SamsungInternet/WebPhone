@@ -65,7 +65,7 @@ function getLocalStream() {
 function setLocalStream(stream) {
     window.localAudio.srcObject = stream;
     window.localAudio.autoplay = true;
-    window.peerStream = stream;
+    window.localStream = stream;
 }
 
 /**
