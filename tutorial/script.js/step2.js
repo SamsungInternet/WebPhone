@@ -1,4 +1,4 @@
-/* global Peer */
+/* ADD THIS TO YOUR PREVIOUS STEP */
 
 
 /**
