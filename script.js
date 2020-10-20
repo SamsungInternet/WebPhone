@@ -21,7 +21,7 @@ window.peer = peer;
 const callBtn = document.querySelector('.call-btn');
 const audioContainer = document.querySelector('.call-container');
 const hangUpBtn = document.querySelector('.hangup-btn');
-let peer_id;
+
 let conn;
 let code;
 
@@ -49,7 +49,6 @@ function getLocalStream() {
 
     navigator.mediaDevices.getUserMedia(constraints).then( stream => {
         console.log(stream);
-        window.localStream = stream;
         setLocalStream(stream);
     }).catch( err => {
         console.log("u got an error:" + err)
@@ -65,7 +64,7 @@ function getLocalStream() {
 function setLocalStream(stream) {
     window.localAudio.srcObject = stream;
     window.localAudio.autoplay = true;
-    window.peerStream = stream;
+    window.localStream = stream;
 }
 
 /**
@@ -125,7 +124,6 @@ callBtn.addEventListener('click', function(){
     call.on('stream', function(stream) {
         showConnectedContent();
         console.log(peer);
-        window.peerStream = stream;
         setRemoteStream(stream);
     });
 })
@@ -167,15 +165,16 @@ peer.on('call', function(call) {
         call.on('stream', function(stream) {
             console.log('Stream Received');
             setRemoteStream(stream);
-            window.peerStream = stream;
         });
-        call.on('disconnected', function (){
-            alert("call ended");
+        conn.on('close', function (){
+            showCallContent();
         })
     } else {
         console.log("call denied");
     }
 });
+
+
 
 peer.on('error', err => console.error(err));
 
